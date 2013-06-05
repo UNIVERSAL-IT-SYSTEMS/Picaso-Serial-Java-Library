@@ -1,6 +1,7 @@
 package com.darkprograms.picasoserial;
 
-import com.darkprograms.picasoserial.screengraphics.ImageControl;
+import com.darkprograms.picasoserial.screengraphics.Graphics;
+import com.darkprograms.picasoserial.screengraphics.TextAndString;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 
@@ -13,25 +14,30 @@ import jssc.SerialPortException;
  */
 public class LCD {
 
-    private SerialPort serialPort;
+    protected SerialPort serialPort;
 
     public LCD(String serialPortLocation){
         setSerialPort(new SerialPort(serialPortLocation));
         try {
-            System.out.println("Port opened: " + serialPort.openPort());
-            System.out.println("Params setted: " + serialPort.setParams(9600, 8, 1, 0));
+            System.out.println("Port opened: " + getSerialPort().openPort());
+            System.out.println("Params set: " + getSerialPort().setParams(9600, 8, 1, 0));
         }
         catch (SerialPortException ex){
             System.out.println(ex);
         }
-    }
-
-    public ImageControl imageControl(){
-        return new ImageControl();
+        serialPort.isOpened();
     }
 
     protected LCD(){
 
+    }
+
+    public Graphics graphics(){
+        return new Graphics(getSerialPort());
+    }
+
+    public TextAndString textAndString(){
+        return new TextAndString(getSerialPort());
     }
 
     protected SerialPort getSerialPort() {

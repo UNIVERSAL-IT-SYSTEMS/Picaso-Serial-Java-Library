@@ -13,4 +13,7 @@ public interface Constants {
 
     //gfx_Cls
     public static final int CLEAR_SCREEN = 0xFFCD;
+
+    public static final int PUT_STRING = 0x0018;
+
 }
