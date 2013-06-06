@@ -16,28 +16,31 @@ public class LCD {
 
     protected SerialPort serialPort;
 
-    public LCD(String serialPortLocation){
+    public LCD(String serialPortLocation) {
         setSerialPort(new SerialPort(serialPortLocation));
         try {
             System.out.println("Port opened: " + getSerialPort().openPort());
             System.out.println("Params set: " + getSerialPort().setParams(9600, 8, 1, 0));
-        }
-        catch (SerialPortException ex){
+        } catch (SerialPortException ex) {
             System.out.println(ex);
         }
         serialPort.isOpened();
     }
 
-    protected LCD(){
+    protected LCD() {
 
     }
 
-    public Graphics graphics(){
+    public Graphics graphics() {
         return new Graphics(getSerialPort());
     }
 
-    public TextAndString textAndString(){
+    public TextAndString textAndString() {
         return new TextAndString(getSerialPort());
+    }
+
+    public void close() throws SerialPortException {
+        getSerialPort().closePort();
     }
 
     protected SerialPort getSerialPort() {

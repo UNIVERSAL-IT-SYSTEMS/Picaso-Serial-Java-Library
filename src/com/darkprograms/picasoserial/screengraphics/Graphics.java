@@ -1,6 +1,6 @@
 package com.darkprograms.picasoserial.screengraphics;
 
-import com.darkprograms.picasoserial.LCD;
+import com.darkprograms.picasoserial.util.BasicSerial;
 import com.darkprograms.picasoserial.util.Constants;
 import jssc.SerialPort;
 import jssc.SerialPortException;
@@ -13,24 +13,22 @@ import jssc.SerialPortTimeoutException;
  * Time: 6:39 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Graphics {
+public class Graphics extends BasicSerial {
 
     private SerialPort serialPort;
 
-    public Graphics(SerialPort serialPort){
-       setSerialPort(serialPort);
+    public Graphics(SerialPort serialPort) {
+        setSerialPort(serialPort);
     }
 
-    private Graphics(){
+    private Graphics() {
 
     }
 
-    public boolean clearScreen() throws SerialPortException, SerialPortTimeoutException{
-        System.out.println(serialPort.isOpened());
-         getSerialPort().writeByte((byte) ((Constants.CLEAR_SCREEN & 0xff00) >> 8)); //MSB
-         getSerialPort().writeByte((byte) (Constants.CLEAR_SCREEN & 0xff)); //LSB
-         return (getSerialPort().readBytes(1, 1500)[0] == Constants.ACK_BYTE);
-     }
+    public boolean clearScreen() throws SerialPortException, SerialPortTimeoutException {
+        writeWord(Constants.CLEAR_SCREEN, getSerialPort());
+        return isAcknowledged(getSerialPort());
+    }
 
     private SerialPort getSerialPort() {
         return serialPort;
