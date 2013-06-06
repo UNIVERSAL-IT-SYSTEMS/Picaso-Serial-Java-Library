@@ -197,18 +197,14 @@ public class TextAndString extends BasicSerial {
     public TextAttributeResponse setTextAttributes(boolean bold, boolean italic, boolean inverse, boolean underline) throws SerialPortException, SerialPortTimeoutException {
         writeWord(Constants.TEXT_ATTRIBUTES, getSerialPort());
         int value = 0;
-        if (bold) {
+        if (bold)
             value += Constants.BOLD;
-        }
-        if (italic) {
+        if (italic)
             value += Constants.ITALIC;
-        }
-        if (inverse) {
+        if (inverse)
             value += Constants.INVERSE;
-        }
-        if (underline) {
+        if (underline)
             value += Constants.UNDERLINE;
-        }
 
         writeWord(value, serialPort);
 
